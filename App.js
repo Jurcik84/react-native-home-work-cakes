@@ -1,15 +1,22 @@
 import React from 'react';
 import { Font, AppLoading } from 'expo';
 import { createStackNavigator } from 'react-navigation';
-import { Container, Header, Content, List, ListItem, Thumbnail, Text, Body, Button, Title } from 'native-base';
+import { Container, Header, Content, List, ListItem, Thumbnail, Text, Body, Button, Title, Form, Item, Input, Label } from 'native-base';
 
 
+import Roboto from 'native-base/Fonts/Roboto.ttf';
+import Roboto_medium from 'native-base/Fonts/Roboto_medium.ttf';
+// Roboto: require("native-base/Fonts/Roboto.ttf"),
+// Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
 
-const CAKES_END_POINT = `http://ec2-34-243-153-154.eu-west-1.compute.amazonaws.com:5000/api/cakes/`;
 
 // screens
 import DetailScreen from './DetailScreen';
 import CreateScreen from './CreateScreen';
+
+
+// server end point
+const CAKES_END_POINT = `http://ec2-34-243-153-154.eu-west-1.compute.amazonaws.com:5000/api/cakes/`;
 
 
 // HomeScreen
@@ -28,10 +35,13 @@ class HomeScreen extends React.Component {
   //     </Button>
   //   )
   // }
+
+
+
   async componentWillMount() {
     await Expo.Font.loadAsync({
-      'Roboto': require('native-base/Fonts/Roboto.ttf'),
-      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+      'Roboto': Roboto,
+      'Roboto_medium': Roboto_medium,
     });
 
     this.setState({
@@ -64,8 +74,6 @@ class HomeScreen extends React.Component {
     if (isFontLoaded === false) {
       return <AppLoading />;
     }
-
-
     return (
       <Container>
         <Header>
