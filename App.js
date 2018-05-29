@@ -1,7 +1,7 @@
 import React from 'react';
 import { Font, AppLoading } from 'expo';
 import { createStackNavigator } from 'react-navigation';
-import { Container, Header, Content, List, ListItem, Thumbnail, Text, Body, Button, Title, Form, Item, Input, Label } from 'native-base';
+import { Container, Header, Content, List, ListItem, Thumbnail, Text, Body, Button, Title, Form, Item, Input, Label, Right } from 'native-base';
 
 
 import Roboto from 'native-base/Fonts/Roboto.ttf';
@@ -77,9 +77,14 @@ class HomeScreen extends React.Component {
     return (
       <Container>
         <Header>
-          <Button onPress={() => this.props.navigation.navigate('Create')}>
-            <Text>Create Screen</Text>
-          </Button>
+          <Right>
+            <Button
+              rounded
+              danger
+              onPress={() => this.props.navigation.navigate('Create')}>
+              <Text>+</Text>
+            </Button>
+          </Right>
         </Header>
         <Content>
           <List>
