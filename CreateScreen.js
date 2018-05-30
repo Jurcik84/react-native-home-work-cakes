@@ -107,9 +107,7 @@ class CreateScreen extends React.Component {
                     onPress={() => this.onSubmit()}>
                     <Text>Add New Cake</Text>
                 </Button>
-                <Text>{
-                    JSON.stringify(this.state)
-                }</Text>
+            
             </Content>
         </Container>
         )
