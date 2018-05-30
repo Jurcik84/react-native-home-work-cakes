@@ -8,7 +8,6 @@ import {
 
 const CAKES_END_POINT = `http://ec2-34-243-153-154.eu-west-1.compute.amazonaws.com:5000/api/cakes/`;
 
-
 class CreateScreen extends React.Component {
 
     state = {
@@ -17,8 +16,6 @@ class CreateScreen extends React.Component {
         imageUrl: '',
         yumFactor: '1',
         comment: '',
-
-
     }
 
     onSubmit = async (value) => {
@@ -27,13 +24,15 @@ class CreateScreen extends React.Component {
 
         try {
 
+            const method_post = 'POST';
+
             const cake_req = {
                 ...this.state,
                 yumFactor: Number(this.state.yumFactor),
-                id: Math.floor((Math.random() * 100) + 1)
+                id: Math.floor((Math.random() * 1000) + 1)
             };
 
-            const method_post = 'POST';
+
 
             const response = await fetch(CAKES_END_POINT, {
 
@@ -54,11 +53,10 @@ class CreateScreen extends React.Component {
                     imageUrl: '',
                     yumFactor: '1',
                     comment: '',
+                    id: 0
                 });
-
-                console.log('', response)
-
-                this.props.navigation.navigate('Home');
+                alert('Your cake has been successfully added')
+                setTimeout(() => this.props.navigation.navigate('Home'), 2000)
             }
         }
         catch (error) {
