@@ -60,7 +60,8 @@ class CreateScreen extends React.Component {
             }
         }
         catch (error) {
-            console.error("fetchCakeById:ERROR")
+            console.error("createCake:ERROR")
+            alert('Adding cakes is temporary out of service, we are working hard to fix it')
         }
     }
 
