@@ -11,12 +11,11 @@ class DetailScreen extends React.Component {
         const itemFromParams = this.props.navigation.getParam("data");
         return (
             <Container>
-                <Header />
+                <Header >
+                    <Text>Cake Detail</Text>
+                </Header>
                 <Content>
                     <Card>
-                        <CardItem>
-                            <Text>Cake Detail</Text>
-                        </CardItem>
                         <CardItem>
                             <Body>
                                 <CardItem>
@@ -25,8 +24,14 @@ class DetailScreen extends React.Component {
                                 </CardItem>
                             </Body>
                         </CardItem>
-                        <CardItem footer>
-                            <Text>GeekyAnts</Text>
+                        <CardItem >
+                            <Text>name : {itemFromParams.name}</Text>
+                        </CardItem>
+                        <CardItem >
+                            <Text>comment : {itemFromParams.comment}</Text>
+                        </CardItem>
+                        <CardItem>
+                            <Text>yumFactor : {itemFromParams.yumFactor}</Text>
                         </CardItem>
                     </Card>
                 </Content>
