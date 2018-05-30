@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { Provider } from 'react-redux'
 import { Font, AppLoading } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 import { Container, Header, Content, List, ListItem, Thumbnail, Text, Body, Button, Title, Form, Item, Input, Label, Right } from 'native-base';
@@ -13,105 +15,14 @@ import Roboto_medium from 'native-base/Fonts/Roboto_medium.ttf';
 // screens
 import DetailScreen from './DetailScreen';
 import CreateScreen from './CreateScreen';
+import HomeScreen from './HomeScreen';
 
 
-// server end point
-const CAKES_END_POINT = `http://ec2-34-243-153-154.eu-west-1.compute.amazonaws.com:5000/api/cakes/`;
+// Redux Store
+import store from './src/store';
 
 
-// HomeScreen
-class HomeScreen extends React.Component {
-
-  state = {
-    data: [],
-    fetchError: '',
-    isFontLoaded: false
-  }
-
-  // static navigationOptions = {
-  //   headerRight: (
-  //     <Button onPress={() => this.props.navigation.navigate('Create')}>
-  //       <Text>Miau</Text>
-  //     </Button>
-  //   )
-  // }
-
-
-
-  async componentWillMount() {
-    await Expo.Font.loadAsync({
-      'Roboto': Roboto,
-      'Roboto_medium': Roboto_medium,
-    });
-
-    this.setState({
-      isFontLoaded: true
-    })
-  }
-
-  async componentDidMount() {
-
-    try {
-      const resposne = await fetch(CAKES_END_POINT);
-      const json = await resposne.json();
-
-      // setState sync-like
-      this.setState({
-        data: json
-      });
-
-    } catch (error) {
-      this.setState({
-        fetchError: error.message
-      });
-    }
-  }
-
-  render() {
-
-    const { data, fetchError, isFontLoaded } = this.state;
-
-    if (isFontLoaded === false) {
-      return <AppLoading />;
-    }
-    return (
-      <Container>
-        <Header>
-          <Right>
-            <Button
-              rounded
-              danger
-              onPress={() => this.props.navigation.navigate('Create')}>
-              <Text>+</Text>
-            </Button>
-          </Right>
-        </Header>
-        <Content>
-          <List>
-            {
-              data.map((cakeItem, cakeIndex) => <ListItem
-                key={cakeItem.id}
-                onPress={() => this.props.navigation.navigate('Details', {
-                  data: cakeItem
-                })} >
-                <Thumbnail
-                  size={80}
-                  source={{ uri: cakeItem.imageUrl }} />
-                <Body>
-                  <Text>Sankhadeep</Text>
-                  <Text>{cakeItem.name}</Text>
-                </Body>
-              </ListItem>)
-            }
-          </List>
-        </Content>
-      </Container>
-    );
-  }
-}
-
-
-export default createStackNavigator(
+const RootStack = createStackNavigator(
   {
     Home: {
       screen: HomeScreen
@@ -128,3 +39,16 @@ export default createStackNavigator(
   }
 );
 
+
+class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <RootStack />
+      </Provider>
+    )
+  }
+}
+
+
+export default App;
