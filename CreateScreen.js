@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Font } from 'expo';
 import { Image } from 'react-native';
 import {
     Container, Header, Content, Form, Item, Input, Label, Text, Textarea, Button, Picker
 } from 'native-base';
+
+import { createCake } from './src/actions';
 
 
 const CAKES_END_POINT = `http://ec2-34-243-153-154.eu-west-1.compute.amazonaws.com:5000/api/cakes/`;
@@ -20,44 +23,19 @@ class CreateScreen extends React.Component {
 
     onSubmit = async (value) => {
 
-        console.log(JSON.stringify({ ...this.state, id: Math.floor((Math.random() * 100) + 1) }))
-
         try {
 
-            const method_post = 'POST';
+            this.props.createCake(this.state);
 
-            const cake_req = {
-                ...this.state,
-                yumFactor: Number(this.state.yumFactor),
-                id: Math.floor((Math.random() * 1000) + 1)
-            };
-
-
-
-            const response = await fetch(CAKES_END_POINT, {
-
-                method: method_post,
-
-                body: JSON.stringify(cake_req),
-
-                headers: new Headers({
-
-                    'Content-Type': 'application/json'
-                }),
+            this.setState({
+                name: '',
+                imageUrl: '',
+                yumFactor: '1',
+                comment: '',
             });
 
-            if (response.status === 201) {
 
-                this.setState({
-                    name: '',
-                    imageUrl: '',
-                    yumFactor: '1',
-                    comment: '',
-                    id: 0
-                });
-                alert('Your cake has been successfully added')
-                setTimeout(() => this.props.navigation.navigate('Home'), 2000)
-            }
+            setTimeout(() => this.props.navigation.navigate('Home'), 2000)
         }
         catch (error) {
             console.error("createCake:ERROR")
@@ -72,6 +50,7 @@ class CreateScreen extends React.Component {
                 <Form>
                     <Item>
                         <Input
+                           
                             placeholder="Cake Name"
                             onChangeText={(name) => this.setState({ name })} />
                     </Item>
@@ -107,7 +86,7 @@ class CreateScreen extends React.Component {
                     onPress={() => this.onSubmit()}>
                     <Text>Add New Cake</Text>
                 </Button>
-            
+
             </Content>
         </Container>
         )
@@ -115,5 +94,60 @@ class CreateScreen extends React.Component {
 }
 
 
+const mapStateToProps = (state) => {
 
-export default CreateScreen;
+    return {
+        cake: state.cake,
+    }
+};
+
+
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+        createCake: (cake) => {
+            dispatch(createCake(cake))
+        }
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateScreen);
+
+
+
+
+    // const method_post = 'POST';
+
+            // const cake_req = {
+            //     ...this.state,
+            //     yumFactor: Number(this.state.yumFactor),
+            //     id: Math.floor((Math.random() * 1000) + 1)
+            // };
+
+
+
+            // const response = await fetch(CAKES_END_POINT, {
+
+            //     method: method_post,
+
+            //     body: JSON.stringify(cake_req),
+
+            //     headers: new Headers({
+
+            //         'Content-Type': 'application/json'
+            //     }),
+            // });
+
+            // if (response.status === 201) {
+
+            //     this.setState({
+            //         name: '',
+            //         imageUrl: '',
+            //         yumFactor: '1',
+            //         comment: '',
+            //         id: 0
+            //     });
+            //     alert('Your cake has been successfully added')
+            //     setTimeout(() => this.props.navigation.navigate('Home'), 2000)
+            // }
