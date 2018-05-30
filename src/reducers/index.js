@@ -34,13 +34,13 @@ export function reducer(state, action) {
                     comment: '',
                     id: 0
                 }
-            }
+            };
 
         case "CREATE_CAKE_SUC":
             return {
                 ...state,
                 status: action.status
-            }
+            };
         default:
             return state;
     }

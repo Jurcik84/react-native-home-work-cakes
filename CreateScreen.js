@@ -33,9 +33,9 @@ class CreateScreen extends React.Component {
                 yumFactor: '1',
                 comment: '',
             });
-
-
-            setTimeout(() => this.props.navigation.navigate('Home'), 2000)
+          
+            alert('Cake added')
+            setTimeout(() => this.props.navigation.navigate('Home'), 2000);
         }
         catch (error) {
             console.error("createCake:ERROR")
@@ -50,7 +50,6 @@ class CreateScreen extends React.Component {
                 <Form>
                     <Item>
                         <Input
-                           
                             placeholder="Cake Name"
                             onChangeText={(name) => this.setState({ name })} />
                     </Item>
